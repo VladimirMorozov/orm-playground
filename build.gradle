@@ -64,5 +64,7 @@ dependencies {
 	jooqRuntime project(':orm.playground.jooq.generator')
 	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	compile ('org.hibernate.validator:hibernate-validator:6.0.14.Final')
+	testCompile('org.assertj:assertj-core:3.11.0')
 	
 }
