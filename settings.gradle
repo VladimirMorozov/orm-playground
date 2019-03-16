@@ -4,3 +4,5 @@ pluginManagement {
 	}
 }
 rootProject.name = 'orm.playground'
+include 'orm.playground.jooq.generator'
+
