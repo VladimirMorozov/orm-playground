@@ -64,7 +64,10 @@ dependencies {
 	jooqRuntime project(':orm.playground.jooq.generator')
 	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	compile ('org.hibernate.validator:hibernate-validator:6.0.14.Final')
-	testCompile('org.assertj:assertj-core:3.11.0')
+    implementation ('org.hibernate.validator:hibernate-validator:6.0.14.Final')
+	testImplementation('org.assertj:assertj-core:3.11.0')
+
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
 	
 }
