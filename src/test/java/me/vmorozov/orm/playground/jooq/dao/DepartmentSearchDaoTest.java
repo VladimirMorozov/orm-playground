@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class DepartmentDaoTest extends IntegrationTest {
+public class DepartmentSearchDaoTest extends IntegrationTest {
 
     @Autowired
-    DepartmentDao departmentDao;
+    DepartmentSearchDao departmentSearchDao;
 
     @Test
     public void shouldFetchTable() {
@@ -24,9 +24,15 @@ public class DepartmentDaoTest extends IntegrationTest {
 
         DepartmentSearch emptyDepartmentSearch = new DepartmentSearch();
 
-        List<DepartmentTableRow> departmentTableRows = departmentDao.fetchDepartmentTableData2(departmentSearch);
-        departmentDao.fetchDepartmentTableData2(emptyDepartmentSearch);
+        List<DepartmentTableRow> departmentTableRows = departmentSearchDao.fetchDepartmentTableData3(departmentSearch);
+        departmentSearchDao.fetchDepartmentTableData3(emptyDepartmentSearch);
+
+        int count = departmentSearchDao.fetchDepartmentTableCount(departmentSearch);
+        int count2 = departmentSearchDao.fetchDepartmentTableCount(emptyDepartmentSearch);
+
         System.out.println(departmentTableRows);
+        System.out.println(count);
+        System.out.println(count2);
     }
 
 
