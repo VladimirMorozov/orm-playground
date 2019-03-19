@@ -7,9 +7,10 @@ import me.vmorozov.orm.playground.jooq.generated.tables.EmployeeTable;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.SelectFinalStep;
+import org.jooq.SelectLimitStep;
 import org.jooq.SelectSelectStep;
 import org.jooq.impl.DSL;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class DepartmentSearchDao {
         this.dslContext = dslContext;
     }
 
-    public List<DepartmentTableRow> fetchDepartmentTableData(DepartmentSearch search) {
+    public List<DepartmentTableRow> fetchDepartmentTableData(DepartmentSearch search, Pageable pageable) {
         Range<Integer> employeeCountRange = search.getEmployeeCount();
 
         return dslContext.select(fields(
@@ -53,10 +54,11 @@ public class DepartmentSearchDao {
             .and(COMPANY.NAME.containsIgnoreCase(search.getCompanyName()))
             .groupBy(DEPARTMENT.ID, COMPANY.ID, head.ID)
             .having(count(emp.ID).between(employeeCountRange.getMin(), employeeCountRange.getMax()))
+            .limit(pageable.getPageSize()).offset((int) pageable.getOffset())
             .fetchInto(DepartmentTableRow.class);
     }
 
-    public List<DepartmentTableRow> fetchDepartmentTableData2(DepartmentSearch search) {
+    public List<DepartmentTableRow> fetchDepartmentTableData2(DepartmentSearch search, Pageable pageable) {
         return dslContext
             .select(fields(
                 prefixed(DEPARTMENT, COMPANY),
@@ -73,19 +75,21 @@ public class DepartmentSearchDao {
                 .build())
             .groupBy(DEPARTMENT.ID, COMPANY.ID, head.ID)
             .having(conditionBetween(count(emp.ID), search.getEmployeeCount()).build())
+            .limit(pageable.getPageSize()).offset((int) pageable.getOffset())
             .fetchInto(DepartmentTableRow.class);
     }
 
-    public List<DepartmentTableRow> fetchDepartmentTableData3(DepartmentSearch search) {
-        SelectFinalStep<Record> select = createTableSelect(
-            select(fields(
+    public List<DepartmentTableRow> fetchDepartmentTableData3(DepartmentSearch search, Pageable pageable) {
+        SelectLimitStep<Record> select = createTableSelect(
+            dslContext.select(fields(
                 prefixed(DEPARTMENT, COMPANY),
                 head.NAME.as("department_head_name"),
                 count(emp.ID).as(employeeCount))
             ),
             search);
 
-        return dslContext.fetch(select).into(DepartmentTableRow.class);
+        return select.limit(pageable.getPageSize()).offset((int) pageable.getOffset())
+            .fetchInto(DepartmentTableRow.class);
     }
 
     public int fetchDepartmentTableCount(DepartmentSearch search) {
@@ -95,7 +99,7 @@ public class DepartmentSearchDao {
         );
     }
 
-    private <T extends Record> SelectFinalStep<T> createTableSelect(
+    private <T extends Record> SelectLimitStep<T> createTableSelect(
         SelectSelectStep<T> select,
         DepartmentSearch search
     ) {
