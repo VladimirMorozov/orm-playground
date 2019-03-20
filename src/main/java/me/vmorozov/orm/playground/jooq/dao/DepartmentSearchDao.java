@@ -107,14 +107,14 @@ public class DepartmentSearchDao {
         .alwaysSortBy(DEPARTMENT_ID_as_id, ASC);
 
     public List<DepartmentTableRow> fetchDepartmentTableData3(DepartmentSearch search, Pageable pageable) {
-        SelectOrderByStep<Record> select = createTableSelect(
-            dslContext.select(fields(
-                prefixed(DEPARTMENT, COMPANY),
-                DEPARTMENT_ID_as_id,
-                head.NAME.as("department_head_name"),
-                count(emp.ID).as(employee_count))
-            ),
-            search);
+        SelectSelectStep<Record> selectHead = dslContext.select(fields(
+            prefixed(DEPARTMENT, COMPANY),
+            DEPARTMENT_ID_as_id,
+            head.NAME.as("department_head_name"),
+            count(emp.ID).as(employee_count))
+        );
+
+        SelectOrderByStep<Record> select = createTableSelect(selectHead, search);
 
         return select
             .orderBy(orderByBuilder.build(pageable.getSort()))
