@@ -27,10 +27,10 @@ public class DepartmentSearchDaoTest extends IntegrationTest {
 
         DepartmentSearch emptyDepartmentSearch = new DepartmentSearch();
 
-        List<DepartmentTableRow> departmentTableRows = departmentSearchDao.fetchDepartmentTableData3(
+        List<DepartmentTableRow> departmentTableRows = departmentSearchDao.fetchDepartmentTableData(
             departmentSearch, PageRequest.of(0, 10, new Sort(Direction.ASC, "departmentHeadName")));
-        List<DepartmentTableRow> departmentTableRows2 = departmentSearchDao.fetchDepartmentTableData3(departmentSearch, PageRequest.of(1, 2));
-        departmentSearchDao.fetchDepartmentTableData3(emptyDepartmentSearch, PageRequest.of(0, 100, new Sort(Direction.ASC, "departmentHeadName")));
+        List<DepartmentTableRow> departmentTableRows2 = departmentSearchDao.fetchDepartmentTableData(departmentSearch, PageRequest.of(1, 2));
+        departmentSearchDao.fetchDepartmentTableData(emptyDepartmentSearch, PageRequest.of(0, 100, new Sort(Direction.ASC, "departmentHeadName")));
 
         int count = departmentSearchDao.fetchDepartmentTableCount(departmentSearch);
         int count2 = departmentSearchDao.fetchDepartmentTableCount(emptyDepartmentSearch);

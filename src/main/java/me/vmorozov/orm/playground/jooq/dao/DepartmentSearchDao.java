@@ -41,7 +41,7 @@ public class DepartmentSearchDao {
         this.dslContext = dslContext;
     }
 
-    public List<DepartmentTableRow> fetchDepartmentTableData(DepartmentSearch search, Pageable pageable) {
+    public List<DepartmentTableRow> fetchDepartmentTableData_Untemplated(DepartmentSearch search, Pageable pageable) {
         Range<Integer> employeeCountRange = search.getEmployeeCount();
 
         return dslContext.select(fields(
@@ -69,7 +69,7 @@ public class DepartmentSearchDao {
             .fetchInto(DepartmentTableRow.class);
     }
 
-    public List<DepartmentTableRow> fetchDepartmentTableData2(DepartmentSearch search, Pageable pageable) {
+    public List<DepartmentTableRow> fetchDepartmentTableData_Unextracted(DepartmentSearch search, Pageable pageable) {
         OrderByBuilder orderByBuilder = new OrderByBuilder()
             .allowSortByFieldsOf(DepartmentTableRow.class)
             .alwaysSortBy(DEPARTMENT_ID_as_id, ASC);
@@ -106,7 +106,7 @@ public class DepartmentSearchDao {
         .allowSortByFieldsOf(DepartmentTableRow.class)
         .alwaysSortBy(DEPARTMENT_ID_as_id, ASC);
 
-    public List<DepartmentTableRow> fetchDepartmentTableData3(DepartmentSearch search, Pageable pageable) {
+    public List<DepartmentTableRow> fetchDepartmentTableData(DepartmentSearch search, Pageable pageable) {
         SelectSelectStep<Record> selectHead = dslContext.select(fields(
             prefixed(DEPARTMENT, COMPANY),
             DEPARTMENT_ID_as_id,
