@@ -32,6 +32,13 @@ public class ConditionBuilder {
         return this;
     }
 
+    public ConditionBuilder and(Condition condition, boolean conditionToAddWhereCondition) {
+        if (conditionToAddWhereCondition) {
+            conditions.add(condition);
+        }
+        return this;
+    }
+
     public List<Condition> build() {
         return conditions;
     }

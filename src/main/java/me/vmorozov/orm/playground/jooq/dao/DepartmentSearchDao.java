@@ -25,6 +25,7 @@ import static me.vmorozov.orm.playground.jooq.util.DaoUtil.fields;
 import static me.vmorozov.orm.playground.jooq.util.DaoUtil.prefixed;
 import static org.jooq.SortOrder.ASC;
 import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.select;
 
 @Repository
@@ -56,6 +57,11 @@ public class DepartmentSearchDao {
             .where(head.NAME.containsIgnoreCase(search.getDepartmentHeadName()))
             .and(DEPARTMENT.NAME.containsIgnoreCase(search.getDepartmentName()))
             .and(COMPANY.NAME.containsIgnoreCase(search.getCompanyName()))
+            .and(exists(
+                select(EMPLOYEE.ID)
+                    .from(EMPLOYEE)
+                    .where(EMPLOYEE.DEPARTMENT_ID.eq(DEPARTMENT.ID))
+                    .and(EMPLOYEE.POSITION.eq("programmer"))))
             .groupBy(DEPARTMENT.ID, COMPANY.ID, head.ID)
             .having(count(emp.ID).between(employeeCountRange.getMin(), employeeCountRange.getMax()))
             .orderBy(employee_count, DEPARTMENT.ID)
@@ -82,6 +88,12 @@ public class DepartmentSearchDao {
             .where(condition(head.NAME::containsIgnoreCase, search.getDepartmentHeadName())
                 .and(DEPARTMENT.NAME::containsIgnoreCase, search.getDepartmentName())
                 .and(COMPANY.NAME::containsIgnoreCase, search.getCompanyName())
+                .and(exists(
+                    select(EMPLOYEE.ID)
+                        .from(EMPLOYEE)
+                        .where(EMPLOYEE.DEPARTMENT_ID.eq(DEPARTMENT.ID))
+                        .and(EMPLOYEE.POSITION.eq("programmer"))),
+                    search.isMustHaveProgrammers())
                 .build())
             .groupBy(DEPARTMENT.ID, COMPANY.ID, head.ID)
             .having(conditionBetween(count(emp.ID), search.getEmployeeCount()).build())
@@ -106,7 +118,8 @@ public class DepartmentSearchDao {
 
         return select
             .orderBy(orderByBuilder.build(pageable.getSort()))
-            .limit(pageable.getPageSize()).offset((int) pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .offset((int) pageable.getOffset())
             .fetchInto(DepartmentTableRow.class);
     }
 
@@ -129,6 +142,12 @@ public class DepartmentSearchDao {
             .where(condition(head.NAME::containsIgnoreCase, search.getDepartmentHeadName())
                 .and(DEPARTMENT.NAME::containsIgnoreCase, search.getDepartmentName())
                 .and(COMPANY.NAME::containsIgnoreCase, search.getCompanyName())
+                .and(exists(
+                    select(EMPLOYEE.ID)
+                        .from(EMPLOYEE)
+                        .where(EMPLOYEE.DEPARTMENT_ID.eq(DEPARTMENT.ID))
+                        .and(EMPLOYEE.POSITION.eq("programmer"))),
+                    search.isMustHaveProgrammers())
                 .build())
             .groupBy(DEPARTMENT.ID, COMPANY.ID, head.ID)
             .having(conditionBetween(count(emp.ID), search.getEmployeeCount()).build());

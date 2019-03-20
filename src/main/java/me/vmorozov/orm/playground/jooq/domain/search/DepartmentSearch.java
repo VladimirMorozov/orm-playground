@@ -6,6 +6,7 @@ public class DepartmentSearch {
     private String departmentHeadName;
     private Range<Integer> employeeCount;
     private String companyName;
+    private boolean mustHaveProgrammers;
 
     public String getDepartmentName() {
         return departmentName;
@@ -40,6 +41,15 @@ public class DepartmentSearch {
 
     public DepartmentSearch setCompanyName(String companyName) {
         this.companyName = companyName;
+        return this;
+    }
+
+    public boolean isMustHaveProgrammers() {
+        return mustHaveProgrammers;
+    }
+
+    public DepartmentSearch setMustHaveProgrammers(boolean mustHaveProgrammers) {
+        this.mustHaveProgrammers = mustHaveProgrammers;
         return this;
     }
 }
