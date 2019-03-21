@@ -3,7 +3,6 @@ package me.vmorozov.orm.playground.jooq.dao;
 import me.vmorozov.orm.playground.IntegrationTest;
 import me.vmorozov.orm.playground.jooq.domain.DepartmentTableRow;
 import me.vmorozov.orm.playground.jooq.domain.search.DepartmentSearch;
-import me.vmorozov.orm.playground.jooq.domain.search.Range;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +22,7 @@ public class DepartmentSearchDaoTest extends IntegrationTest {
             .setDepartmentHeadName("Vladimir")
             .setDepartmentName("e")
             .setCompanyName("garden")
-            .setEmployeeCount(new Range<>(0, 10));
+            .setEmployeeCount(null);
 
         DepartmentSearch emptyDepartmentSearch = new DepartmentSearch();
 
