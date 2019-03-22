@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 
-public class EmployeeDaoTest extends IntegrationTest {
+public class EmployeeRepositoryTest extends IntegrationTest {
 
     @Autowired
     EmployeeDao employeeDao;

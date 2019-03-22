@@ -55,6 +55,14 @@ project.tasks.getByName('compileJava').dependsOn -= 'generateOrmPlaygroundJooqSc
 
 
 dependencies {
+
+    // while I don't need this starter directly, 
+    // serialization for web is an important part of mapping,
+    // I need auto-configured objectMapper from it
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hibernate5', version: '2.9.8'
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-jooq'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.0'
