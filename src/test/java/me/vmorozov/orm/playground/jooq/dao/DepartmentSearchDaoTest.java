@@ -1,8 +1,8 @@
 package me.vmorozov.orm.playground.jooq.dao;
 
 import me.vmorozov.orm.playground.IntegrationTest;
-import me.vmorozov.orm.playground.jooq.domain.DepartmentTableRow;
-import me.vmorozov.orm.playground.jooq.domain.search.DepartmentSearch;
+import me.vmorozov.orm.playground.domain.DepartmentTableRow;
+import me.vmorozov.orm.playground.domain.search.DepartmentSearch;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;

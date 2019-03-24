@@ -1,4 +1,4 @@
-package me.vmorozov.orm.playground.jooq.domain.search;
+package me.vmorozov.orm.playground.domain.search;
 
 public class Range<T> {
 

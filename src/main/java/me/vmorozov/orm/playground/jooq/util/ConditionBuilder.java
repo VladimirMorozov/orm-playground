@@ -1,6 +1,6 @@
 package me.vmorozov.orm.playground.jooq.util;
 
-import me.vmorozov.orm.playground.jooq.domain.search.Range;
+import me.vmorozov.orm.playground.domain.search.Range;
 import org.jooq.Condition;
 import org.jooq.Field;
 

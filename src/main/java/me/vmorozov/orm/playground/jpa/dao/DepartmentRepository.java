@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface DepartmentRepository extends CrudRepository<Department, Integer> {
+public interface DepartmentRepository extends CrudRepository<Department, Integer>, DepartmentSearchRepository {
 
     @Query("select d, e, c " +
         "from Department as d " +

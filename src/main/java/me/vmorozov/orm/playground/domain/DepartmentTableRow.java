@@ -1,4 +1,4 @@
-package me.vmorozov.orm.playground.jooq.domain;
+package me.vmorozov.orm.playground.domain;
 
 public class DepartmentTableRow {
 
@@ -7,6 +7,20 @@ public class DepartmentTableRow {
     private String departmentHeadName;
     private int employeeCount;
     private String companyName;
+
+    public DepartmentTableRow() {
+    }
+
+    /**
+     * Used by hibernate's criteria query
+     */
+    public DepartmentTableRow(int id, String departmentName, String companyName, String departmentHeadName, long employeeCount) {
+        this.id = id;
+        this.departmentName = departmentName;
+        this.companyName = companyName;
+        this.departmentHeadName = departmentHeadName;
+        this.employeeCount = (int)employeeCount;
+    }
 
     @Override
     public String toString() {
