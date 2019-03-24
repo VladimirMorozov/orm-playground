@@ -4,6 +4,7 @@ import me.vmorozov.orm.playground.domain.DepartmentTableRow;
 import me.vmorozov.orm.playground.domain.search.DepartmentSearch;
 import me.vmorozov.orm.playground.jpa.domain.Department;
 import me.vmorozov.orm.playground.jpa.domain.Employee;
+import me.vmorozov.orm.playground.jpa.util.OrderByBuilder;
 import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
@@ -11,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -41,6 +43,16 @@ public class DepartmentSearchRepositoryImpl implements DepartmentSearchRepositor
         Path<String> employeePosition = employeeRoot.get("position");
         Path<Department> employeeDepartment = employeeRoot.get("department");
 
+        List<Order> orderByList = new OrderByBuilder()
+            .withCriteriaBuilder(cb)
+            .fromSort(pageable.getSort())
+            .mapping("departmentName", departmentName)
+            .mapping("departmentHeadName", departmentHeadName)
+            .mapping("companyName", companyName)
+            .mapping("employeeCount", employeeCount)
+            .alwaysSortBy(cb.asc(id))
+            .build();
+
         criteria
             .select(cb.construct(DepartmentTableRow.class,
                 id,
@@ -64,7 +76,7 @@ public class DepartmentSearchRepositoryImpl implements DepartmentSearchRepositor
                 condition(employeeCount, cb::ge, (long) search.getEmployeeCount().getMin())
                     .and(employeeCount, cb::le, (long) search.getEmployeeCount().getMax())
                     .build(cb))
-            .orderBy(cb.asc(departmentHeadName)); // todo make dynamic
+            .orderBy(orderByList);
 
         return em.createQuery(criteria)
             .setMaxResults(pageable.getPageSize())
