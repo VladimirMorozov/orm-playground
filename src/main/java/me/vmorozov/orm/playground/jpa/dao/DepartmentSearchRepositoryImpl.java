@@ -4,6 +4,7 @@ import me.vmorozov.orm.playground.domain.DepartmentTableRow;
 import me.vmorozov.orm.playground.domain.search.DepartmentSearch;
 import me.vmorozov.orm.playground.jpa.domain.Department;
 import me.vmorozov.orm.playground.jpa.domain.Employee;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,14 +17,14 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import java.util.List;
 
-import static me.vmorozov.orm.playground.jpa.util.ConditionBuilder.condition;
+import static me.vmorozov.orm.playground.jpa.util.PredicateBuilder.condition;
 
 public class DepartmentSearchRepositoryImpl implements DepartmentSearchRepository {
 
     @PersistenceContext
     private EntityManager em;
 
-    public List<DepartmentTableRow> search(DepartmentSearch search) {
+    public List<DepartmentTableRow> search(DepartmentSearch search, Pageable pageable) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<DepartmentTableRow> criteria = cb.createQuery(DepartmentTableRow.class);
         Root<Department> root = criteria.from(Department.class);
@@ -62,9 +63,13 @@ public class DepartmentSearchRepositoryImpl implements DepartmentSearchRepositor
             .having(
                 condition(employeeCount, cb::ge, (long) search.getEmployeeCount().getMin())
                     .and(employeeCount, cb::le, (long) search.getEmployeeCount().getMax())
-                    .build(cb));
+                    .build(cb))
+            .orderBy(cb.asc(departmentHeadName)); // todo make dynamic
 
-        return em.createQuery(criteria).getResultList();
+        return em.createQuery(criteria)
+            .setMaxResults(pageable.getPageSize())
+            .setFirstResult(pageable.getPageNumber())
+            .getResultList();
 
     }
 
