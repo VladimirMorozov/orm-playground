@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.vmorozov.orm.playground.mybatis.dao.DepartmentMapper">
+
+    <resultMap id="department-info" type="me.vmorozov.orm.playground.domain.DepartmentInfo" autoMapping="true">
+        <id property="id" column="id"/>
+        <association property="company" javaType="me.vmorozov.orm.playground.domain.Company"
+                     notNullColumn="id" columnPrefix="company_" autoMapping="true">
+            <id property="id" column="id"/>
+        </association>
+        <collection property="employees" ofType="me.vmorozov.orm.playground.domain.Employee"
+                    notNullColumn="id" columnPrefix="employee_" autoMapping="true">
+            <id property="id" column="id"/>
+        </collection>
+    </resultMap>
+
+    <select id="getDepartmentInfo" resultMap="department-info">
+        SELECT department.*,
+            c.name          as company_name,
+            e.id            as employee_id,
+            e.department_id as employee_department_id,
+            e.name          as employee_name,
+            e.position      as employee_position
+        FROM department
+                 JOIN company c on department.company_id = c.id
+                 JOIN employee e on department.id = e.department_id
+        WHERE department.id = #{id}
+    </select>
+
+    <select id="getDepartmentTableList"
+            resultType="me.vmorozov.orm.playground.domain.search.DepartmentTableRow"
+            parameterType="me.vmorozov.orm.playground.domain.search.DepartmentSearch">
+        SELECT
+            d.id            as id,
+            d.name          as department_name,
+            head.name       as department_head_name,
+            c.name          as company_name,
+            count(e.id)     as employee_count
+        FROM department d
+                 JOIN company c on d.company_id = c.id
+                 JOIN employee e on d.id = e.department_id
+                 JOIN employee head on d.head_id = head.id
+        <where>
+            <if test="departmentName">
+                AND lower(d.name) like '%' || lower(#{departmentName}) || '%'
+            </if>
+            <if test="departmentHeadName">
+                AND lower(head.name) like '%' || lower(#{departmentHeadName}) || '%'
+            </if>
+            <if test="companyName">
+                AND lower(c.name) like '%' || lower(#{companyName}) || '%'
+            </if>
+            <if test="mustHaveProgrammers">
+                AND EXISTS (
+                  SELECT id
+                  FROM employee
+                  WHERE employee.id = d.id
+                        AND employee.position = 'programmer')
+            </if>
+        </where>
+        GROUP BY c.id, d.id, head.name
+        <if test="employeeCount and (employeeCount.min or employeeCount.max)">
+            <trim prefix="HAVING" prefixOverrides="AND |OR ">
+                <if test="employeeCount.min">
+                    AND count(e.id) >= #{employeeCount.min}
+                </if>
+                <if test="employeeCount.max">
+                    <![CDATA[
+                    AND count(e.id) <= #{employeeCount.max}
+                 ]]>
+                </if>
+            </trim>
+        </if>
+    </select>
+
+</mapper>

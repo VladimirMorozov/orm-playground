@@ -3,8 +3,8 @@ package me.vmorozov.orm.playground.jpa.dao;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.vmorozov.orm.playground.IntegrationTest;
-import me.vmorozov.orm.playground.domain.DepartmentTableRow;
 import me.vmorozov.orm.playground.domain.search.DepartmentSearch;
+import me.vmorozov.orm.playground.domain.search.DepartmentTableRow;
 import me.vmorozov.orm.playground.domain.search.Range;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class DepartmentSearchRepositoryImplTest extends IntegrationTest {
         departmentSearch.setDepartmentName("Green")
             .setEmployeeCount(new Range<>(0, 10))
             .setMustHaveProgrammers(true);
-        List<DepartmentTableRow> result = departmentRepository.search(departmentSearch, PageRequest.of(0, 10));
+        List<DepartmentTableRow> result = departmentRepository.searchOld(departmentSearch, PageRequest.of(0, 10));
         System.out.println(objectMapper.writeValueAsString(result));
     }
 

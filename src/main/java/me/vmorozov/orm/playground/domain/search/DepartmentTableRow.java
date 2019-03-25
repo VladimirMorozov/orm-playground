@@ -1,4 +1,4 @@
-package me.vmorozov.orm.playground.domain;
+package me.vmorozov.orm.playground.domain.search;
 
 public class DepartmentTableRow {
 

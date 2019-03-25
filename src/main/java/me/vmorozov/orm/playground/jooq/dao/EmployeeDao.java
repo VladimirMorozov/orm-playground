@@ -1,6 +1,6 @@
 package me.vmorozov.orm.playground.jooq.dao;
 
-import me.vmorozov.orm.playground.jooq.domain.DepartmentInfo;
+import me.vmorozov.orm.playground.domain.DepartmentInfo;
 import me.vmorozov.orm.playground.jooq.generated.tables.DepartmentTable;
 import me.vmorozov.orm.playground.jooq.generated.tables.EmployeeTable;
 import me.vmorozov.orm.playground.jooq.generated.tables.pojos.Employee;

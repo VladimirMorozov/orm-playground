@@ -1,7 +1,7 @@
 package me.vmorozov.orm.playground.jpa.dao;
 
-import me.vmorozov.orm.playground.domain.DepartmentTableRow;
 import me.vmorozov.orm.playground.domain.search.DepartmentSearch;
+import me.vmorozov.orm.playground.domain.search.DepartmentTableRow;
 import me.vmorozov.orm.playground.jpa.domain.Department;
 import me.vmorozov.orm.playground.jpa.domain.Employee;
 import me.vmorozov.orm.playground.jpa.util.OrderByBuilder;
@@ -26,7 +26,8 @@ public class DepartmentSearchRepositoryImpl implements DepartmentSearchRepositor
     @PersistenceContext
     private EntityManager em;
 
-    public List<DepartmentTableRow> search(DepartmentSearch search, Pageable pageable) {
+    @Override
+    public List<DepartmentTableRow> searchOld(DepartmentSearch search, Pageable pageable) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<DepartmentTableRow> criteria = cb.createQuery(DepartmentTableRow.class);
         Root<Department> root = criteria.from(Department.class);

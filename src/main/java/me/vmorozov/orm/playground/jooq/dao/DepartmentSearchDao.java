@@ -1,7 +1,7 @@
 package me.vmorozov.orm.playground.jooq.dao;
 
-import me.vmorozov.orm.playground.domain.DepartmentTableRow;
 import me.vmorozov.orm.playground.domain.search.DepartmentSearch;
+import me.vmorozov.orm.playground.domain.search.DepartmentTableRow;
 import me.vmorozov.orm.playground.domain.search.Range;
 import me.vmorozov.orm.playground.jooq.generated.tables.EmployeeTable;
 import me.vmorozov.orm.playground.jooq.util.OrderByBuilder;

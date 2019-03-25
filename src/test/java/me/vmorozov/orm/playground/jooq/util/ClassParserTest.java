@@ -1,6 +1,6 @@
 package me.vmorozov.orm.playground.jooq.util;
 
-import me.vmorozov.orm.playground.jooq.domain.DepartmentInfo;
+import me.vmorozov.orm.playground.domain.DepartmentInfo;
 import org.junit.Test;
 
 import java.util.Arrays;

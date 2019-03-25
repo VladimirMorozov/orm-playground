@@ -1,8 +1,4 @@
-package me.vmorozov.orm.playground.jooq.domain;
-
-import me.vmorozov.orm.playground.jooq.generated.tables.pojos.Company;
-import me.vmorozov.orm.playground.jooq.generated.tables.pojos.Department;
-import me.vmorozov.orm.playground.jooq.generated.tables.pojos.Employee;
+package me.vmorozov.orm.playground.domain;
 
 import java.util.List;
 
