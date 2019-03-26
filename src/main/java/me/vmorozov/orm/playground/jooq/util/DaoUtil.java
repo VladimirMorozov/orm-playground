@@ -31,6 +31,19 @@ public class DaoUtil {
         return ArrayUtils.addAll(prefixed, subPrefixed);
     }
 
+    public static SelectFieldOrAsterisk[] prefixedWithoutIds(TableImpl... tables) {
+        List<Field> result = new ArrayList<>();
+        for (TableImpl table : tables) {
+            for (Field field : table.fields()) {
+                if (!field.getName().endsWith("id")) {
+                    result.add(field.as(table.getName() + "_" + field.getName()));
+                }
+            }
+        }
+        SelectFieldOrAsterisk[] array = new SelectFieldOrAsterisk[result.size()];
+        return result.toArray(array);
+    }
+
     public static SelectFieldOrAsterisk[] prefixed(TableImpl... tables) {
         List<Field> result = new ArrayList<>();
         for (TableImpl table : tables) {

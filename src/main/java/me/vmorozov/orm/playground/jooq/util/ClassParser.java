@@ -46,12 +46,12 @@ public class ClassParser {
 
                 if (aliasName != null) {
                     result.add(new MappedProperty(
-                        SNAKE_CASE_STRATEGY.translate(name) + "_" + SNAKE_CASE_STRATEGY.translate(propertyDescriptor.getName()),
+                        getPropertyName(name, propertyDescriptor),
                         SNAKE_CASE_STRATEGY.translate(aliasName) + "_" + SNAKE_CASE_STRATEGY.translate(propertyDescriptor.getName()),
                         isKey));
                 } else {
                     result.add(new MappedProperty(
-                        SNAKE_CASE_STRATEGY.translate(name) + "_" + SNAKE_CASE_STRATEGY.translate(propertyDescriptor.getName()),
+                        getPropertyName(name, propertyDescriptor),
                         null,
                         isKey));
                 }
@@ -59,6 +59,15 @@ public class ClassParser {
             }
         }
         return result;
+    }
+
+    private String getPropertyName(String name, PropertyDescriptor propertyDescriptor) {
+        if (name != null) {
+            return SNAKE_CASE_STRATEGY.translate(name) + "_" + SNAKE_CASE_STRATEGY.translate(propertyDescriptor.getName());
+        } else {
+            return SNAKE_CASE_STRATEGY.translate(propertyDescriptor.getName());
+        }
+
     }
 
 }

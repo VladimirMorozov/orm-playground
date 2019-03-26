@@ -8,8 +8,6 @@ import javax.validation.constraints.NotNull;
 
 public class Department {
 
-    private static final long serialVersionUID = 2076426786;
-
     private Integer id;
     private Integer headId;
     private Integer companyId;

@@ -38,7 +38,6 @@ public class EmployeeDao {
 
     private static final JdbcMapper<DepartmentInfo> departmentMapper2 = EpicMapperBuilder
         .forClass(DepartmentInfo.class)
-        .withRootName("department")
         .build();
 
     public EmployeeDao(DSLContext dslContext) {

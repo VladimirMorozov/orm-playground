@@ -3,7 +3,6 @@
  */
 package me.vmorozov.orm.playground.jooq.generated.tables;
 
-
 import me.vmorozov.orm.playground.jooq.generated.Indexes;
 import me.vmorozov.orm.playground.jooq.generated.Keys;
 import me.vmorozov.orm.playground.jooq.generated.Public;

@@ -61,22 +61,26 @@ dependencies {
     // I need auto-configured objectMapper from it
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hibernate5', version: '2.9.8'
-
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-jooq'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hibernate5', version: '2.9.8'
+    
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.0'
-    runtimeOnly 'org.postgresql:postgresql'
+    implementation("org.mybatis:mybatis-typehandlers-jsr310:1.0.2")
 
+    implementation 'org.springframework.boot:spring-boot-starter-jooq'
+    implementation group: 'org.simpleflatmapper', name: 'sfm-jooq', version: '6.4.2'
     jooqRuntime 'org.postgresql:postgresql'
     jooqRuntime project(':orm.playground.jooq.generator')
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    runtimeOnly 'org.postgresql:postgresql'
     implementation('org.hibernate.validator:hibernate-validator:6.0.14.Final')
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation('org.assertj:assertj-core:3.11.0')
 
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
-    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
+    //implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
+    
+    
 
-    implementation group: 'org.simpleflatmapper', name: 'sfm-jooq', version: '6.4.2'
+    
 }

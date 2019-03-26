@@ -21,6 +21,7 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 
 import javax.annotation.Generated;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,7 +39,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class EmployeeTable extends TableImpl<EmployeeRecord> {
 
-    private static final long serialVersionUID = 637376308;
+    private static final long serialVersionUID = -1485647455;
 
     /**
      * The reference instance of <code>public.employee</code>
@@ -72,6 +73,11 @@ public class EmployeeTable extends TableImpl<EmployeeRecord> {
      * The column <code>public.employee.position</code>.
      */
     public final TableField<EmployeeRecord, String> POSITION = createField("position", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+
+    /**
+     * The column <code>public.employee.work_start</code>.
+     */
+    public final TableField<EmployeeRecord, OffsetDateTime> WORK_START = createField("work_start", org.jooq.impl.SQLDataType.TIMESTAMPWITHTIMEZONE, this, "");
 
     /**
      * Create a <code>public.employee</code> table reference

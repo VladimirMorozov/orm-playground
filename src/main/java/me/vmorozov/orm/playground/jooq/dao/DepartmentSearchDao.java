@@ -23,6 +23,7 @@ import static me.vmorozov.orm.playground.jooq.util.ConditionBuilder.condition;
 import static me.vmorozov.orm.playground.jooq.util.ConditionBuilder.conditionBetween;
 import static me.vmorozov.orm.playground.jooq.util.DaoUtil.fields;
 import static me.vmorozov.orm.playground.jooq.util.DaoUtil.prefixed;
+import static me.vmorozov.orm.playground.jooq.util.DaoUtil.prefixedWithoutIds;
 import static org.jooq.SortOrder.ASC;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.exists;
@@ -108,7 +109,7 @@ public class DepartmentSearchDao {
 
     public List<DepartmentTableRow> fetchDepartmentTableData(DepartmentSearch search, Pageable pageable) {
         SelectSelectStep<Record> selectHead = dslContext.select(fields(
-            prefixed(DEPARTMENT, COMPANY),
+            prefixedWithoutIds(DEPARTMENT, COMPANY),
             DEPARTMENT_ID_as_id,
             head.NAME.as("department_head_name"),
             count(emp.ID).as(employee_count))

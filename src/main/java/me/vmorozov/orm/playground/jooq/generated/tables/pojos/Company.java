@@ -3,6 +3,7 @@
  */
 package me.vmorozov.orm.playground.jooq.generated.tables.pojos;
 
+
 import javax.annotation.Generated;
 import java.io.Serializable;
 

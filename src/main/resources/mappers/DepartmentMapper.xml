@@ -21,7 +21,8 @@
             e.id            as employee_id,
             e.department_id as employee_department_id,
             e.name          as employee_name,
-            e.position      as employee_position
+            e.position      as employee_position,
+            e.work_start    as employee_work_start
         FROM department
                  JOIN company c on department.company_id = c.id
                  JOIN employee e on department.id = e.department_id

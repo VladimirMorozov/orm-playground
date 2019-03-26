@@ -20,3 +20,7 @@ CREATE TABLE department (
 ALTER TABLE public.employee
   ADD CONSTRAINT employee_department_id_fk
 FOREIGN KEY (department_id) REFERENCES public.department (id);
+
+alter table employee
+  add work_start timestamp with time zone;
+

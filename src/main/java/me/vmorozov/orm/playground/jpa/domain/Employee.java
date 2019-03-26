@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.time.OffsetDateTime;
 
 @Entity
 @JsonIdentityInfo(property = "id", generator = PropertyGenerator.class)
@@ -22,6 +23,7 @@ public class Employee {
     private Integer id;
     private String  name;
     private String  position;
+    private OffsetDateTime workStart;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Department department;
@@ -61,6 +63,15 @@ public class Employee {
 
     public Employee setPosition(String position) {
         this.position = position;
+        return this;
+    }
+
+    public OffsetDateTime getWorkStart() {
+        return workStart;
+    }
+
+    public Employee setWorkStart(OffsetDateTime workStart) {
+        this.workStart = workStart;
         return this;
     }
 }

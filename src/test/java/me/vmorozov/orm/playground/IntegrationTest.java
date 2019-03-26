@@ -8,6 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class IntegrationTest {
+public abstract class IntegrationTest {
 
 }

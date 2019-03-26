@@ -3,9 +3,11 @@
  */
 package me.vmorozov.orm.playground.jooq.generated.tables.pojos;
 
+
 import javax.annotation.Generated;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.OffsetDateTime;
 
 
 /**
@@ -21,12 +23,13 @@ import java.io.Serializable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Employee implements Serializable {
 
-    private static final long serialVersionUID = 629676349;
+    private static final long serialVersionUID = -959474094;
 
-    private Integer id;
-    private Integer departmentId;
-    private String  name;
-    private String  position;
+    private Integer        id;
+    private Integer        departmentId;
+    private String         name;
+    private String         position;
+    private OffsetDateTime workStart;
 
     public Employee() {}
 
@@ -35,18 +38,21 @@ public class Employee implements Serializable {
         this.departmentId = value.departmentId;
         this.name = value.name;
         this.position = value.position;
+        this.workStart = value.workStart;
     }
 
     public Employee(
-        Integer id,
-        Integer departmentId,
-        String  name,
-        String  position
+        Integer        id,
+        Integer        departmentId,
+        String         name,
+        String         position,
+        OffsetDateTime workStart
     ) {
         this.id = id;
         this.departmentId = departmentId;
         this.name = name;
         this.position = position;
+        this.workStart = workStart;
     }
 
     public Integer getId() {
@@ -86,6 +92,15 @@ public class Employee implements Serializable {
         return this;
     }
 
+    public OffsetDateTime getWorkStart() {
+        return this.workStart;
+    }
+
+    public Employee setWorkStart(OffsetDateTime workStart) {
+        this.workStart = workStart;
+        return this;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Employee (");
@@ -94,6 +109,7 @@ public class Employee implements Serializable {
         sb.append(", ").append(departmentId);
         sb.append(", ").append(name);
         sb.append(", ").append(position);
+        sb.append(", ").append(workStart);
 
         sb.append(")");
         return sb.toString();

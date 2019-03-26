@@ -47,7 +47,7 @@ public class EpicMapperBuilder<T> {
         return JdbcMapperFactory
             .newInstance()
             .unorderedJoin()
-            .addKeys(keys) // todo auto create from object??? maybe create both sorting and selected fields...
+            .addKeys(keys)
             .addAliases(aliases)
             .newMapper(clazz);
     }
