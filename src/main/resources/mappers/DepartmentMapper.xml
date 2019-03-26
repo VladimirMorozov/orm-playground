@@ -42,16 +42,16 @@
                  JOIN employee e on d.id = e.department_id
                  JOIN employee head on d.head_id = head.id
         <where>
-            <if test="departmentName">
-                AND lower(d.name) like '%' || lower(#{departmentName}) || '%'
+            <if test="s.departmentName">
+                AND lower(d.name) like '%' || lower(#{s.departmentName}) || '%'
             </if>
-            <if test="departmentHeadName">
-                AND lower(head.name) like '%' || lower(#{departmentHeadName}) || '%'
+            <if test="s.departmentHeadName">
+                AND lower(head.name) like '%' || lower(#{s.departmentHeadName}) || '%'
             </if>
-            <if test="companyName">
-                AND lower(c.name) like '%' || lower(#{companyName}) || '%'
+            <if test="s.companyName">
+                AND lower(c.name) like '%' || lower(#{s.companyName}) || '%'
             </if>
-            <if test="mustHaveProgrammers">
+            <if test="s.mustHaveProgrammers">
                 AND EXISTS (
                   SELECT id
                   FROM employee
@@ -60,17 +60,27 @@
             </if>
         </where>
         GROUP BY c.id, d.id, head.name
-        <if test="employeeCount and (employeeCount.min or employeeCount.max)">
+        <if test="s.employeeCount and (s.employeeCount.min or s.employeeCount.max)">
             <trim prefix="HAVING" prefixOverrides="AND |OR ">
-                <if test="employeeCount.min">
-                    AND count(e.id) >= #{employeeCount.min}
+                <if test="s.employeeCount.min">
+                    AND count(e.id) >= #{s.employeeCount.min}
                 </if>
-                <if test="employeeCount.max">
+                <if test="s.employeeCount.max">
                     <![CDATA[
-                    AND count(e.id) <= #{employeeCount.max}
+                    AND count(e.id) <= #{s.employeeCount.max}
                  ]]>
                 </if>
             </trim>
+        </if>
+        <if test="p">
+            <if test="p.sort.sorted">
+                ORDER BY
+                <foreach collection="p.sort" item="order" separator=",">
+                    #{order.property} ${order.direction}
+                </foreach>
+            </if>
+            LIMIT #{p.pageSize}
+            OFFSET #{p.offset}
         </if>
     </select>
 

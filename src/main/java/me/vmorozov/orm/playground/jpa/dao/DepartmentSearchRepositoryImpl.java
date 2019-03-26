@@ -81,7 +81,7 @@ public class DepartmentSearchRepositoryImpl implements DepartmentSearchRepositor
 
         return em.createQuery(criteria)
             .setMaxResults(pageable.getPageSize())
-            .setFirstResult(pageable.getPageNumber())
+            .setFirstResult((int) pageable.getOffset())
             .getResultList();
 
     }
