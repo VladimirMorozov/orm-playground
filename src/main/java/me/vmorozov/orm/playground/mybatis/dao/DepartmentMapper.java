@@ -18,4 +18,7 @@ public interface DepartmentMapper {
         @Param("s") DepartmentSearch departmentSearch,
         @Param("p") Pageable pageable);
 
+    long getDepartmentTableCount(@Param("s") DepartmentSearch departmentSearch);
+
+
 }

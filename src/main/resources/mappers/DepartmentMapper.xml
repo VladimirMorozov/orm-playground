@@ -32,6 +32,24 @@
     <select id="getDepartmentTableList"
             resultType="me.vmorozov.orm.playground.domain.search.DepartmentTableRow"
             parameterType="me.vmorozov.orm.playground.domain.search.DepartmentSearch">
+        <include refid="getDepartmentTableCommon"/>
+        <if test="p">
+            <if test="p.sort.sorted">
+                ORDER BY
+                <foreach collection="p.sort" item="order" separator=",">
+                    #{order.property} ${order.direction}
+                </foreach>
+            </if>
+            LIMIT #{p.pageSize}
+            OFFSET #{p.offset}
+        </if>
+    </select>
+
+    <select id="getDepartmentTableCount" resultType="long">
+        SELECT COUNT(*) FROM (<include refid="getDepartmentTableCommon"/>) AS sub
+    </select>
+
+    <sql id="getDepartmentTableCommon">
         SELECT
             d.id            as id,
             d.name          as department_name,
@@ -39,9 +57,9 @@
             c.name          as company_name,
             count(e.id)     as employee_count
         FROM department d
-                 JOIN company c on d.company_id = c.id
-                 JOIN employee e on d.id = e.department_id
-                 JOIN employee head on d.head_id = head.id
+        JOIN company c on d.company_id = c.id
+        LEFT JOIN employee e on d.id = e.department_id
+        LEFT JOIN employee head on d.head_id = head.id
         <where>
             <if test="s.departmentName">
                 AND lower(d.name) like '%' || lower(#{s.departmentName}) || '%'
@@ -54,10 +72,10 @@
             </if>
             <if test="s.mustHaveProgrammers">
                 AND EXISTS (
-                  SELECT id
-                  FROM employee
-                  WHERE employee.id = d.id
-                        AND employee.position = 'programmer')
+                SELECT id
+                FROM employee
+                WHERE employee.id = d.id
+                AND employee.position = 'programmer')
             </if>
         </where>
         GROUP BY c.id, d.id, head.name
@@ -69,20 +87,10 @@
                 <if test="s.employeeCount.max">
                     <![CDATA[
                     AND count(e.id) <= #{s.employeeCount.max}
-                 ]]>
+                    ]]>
                 </if>
             </trim>
         </if>
-        <if test="p">
-            <if test="p.sort.sorted">
-                ORDER BY
-                <foreach collection="p.sort" item="order" separator=",">
-                    #{order.property} ${order.direction}
-                </foreach>
-            </if>
-            LIMIT #{p.pageSize}
-            OFFSET #{p.offset}
-        </if>
-    </select>
+    </sql>
 
 </mapper>
