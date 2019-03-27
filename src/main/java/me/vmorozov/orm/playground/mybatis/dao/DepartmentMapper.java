@@ -20,5 +20,4 @@ public interface DepartmentMapper {
 
     long getDepartmentTableCount(@Param("s") DepartmentSearch departmentSearch);
 
-
 }

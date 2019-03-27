@@ -8,6 +8,7 @@ import me.vmorozov.orm.playground.jooq.util.OrderByBuilder;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.SelectOrderByStep;
 import org.jooq.SelectSelectStep;
 import org.jooq.impl.DSL;
@@ -22,7 +23,6 @@ import static me.vmorozov.orm.playground.jooq.generated.Tables.EMPLOYEE;
 import static me.vmorozov.orm.playground.jooq.util.ConditionBuilder.condition;
 import static me.vmorozov.orm.playground.jooq.util.ConditionBuilder.conditionBetween;
 import static me.vmorozov.orm.playground.jooq.util.DaoUtil.fields;
-import static me.vmorozov.orm.playground.jooq.util.DaoUtil.prefixed;
 import static me.vmorozov.orm.playground.jooq.util.DaoUtil.prefixedWithoutIds;
 import static org.jooq.SortOrder.ASC;
 import static org.jooq.impl.DSL.count;
@@ -42,11 +42,39 @@ public class DepartmentSearchDao {
         this.dslContext = dslContext;
     }
 
+    public Result<Record> fetchDepartmentTableData_Unmappable(DepartmentSearch search, Pageable pageable) {
+        Range<Integer> employeeCountRange = search.getEmployeeCount();
+
+        return dslContext.select(
+            DEPARTMENT.asterisk(),
+            COMPANY.asterisk(),
+            head.NAME.as("department_head_name"),
+            count(emp.ID).as(employee_count)
+        )
+            .from(DEPARTMENT)
+            .join(COMPANY).on(DEPARTMENT.COMPANY_ID.eq(COMPANY.ID))
+            .leftJoin(EMPLOYEE.as(emp)).on(DEPARTMENT.ID.eq(emp.DEPARTMENT_ID))
+            .leftJoin(EMPLOYEE.as(head)).on(head.ID.eq(DEPARTMENT.HEAD_ID))
+            .where(head.NAME.containsIgnoreCase(search.getDepartmentHeadName()))
+            .and(DEPARTMENT.NAME.containsIgnoreCase(search.getDepartmentName()))
+            .and(COMPANY.NAME.containsIgnoreCase(search.getCompanyName()))
+            .and(exists(
+                select(EMPLOYEE.ID)
+                    .from(EMPLOYEE)
+                    .where(EMPLOYEE.DEPARTMENT_ID.eq(DEPARTMENT.ID))
+                    .and(EMPLOYEE.POSITION.eq("programmer"))))
+            .groupBy(DEPARTMENT.ID, COMPANY.ID, head.ID)
+            .having(count(emp.ID).between(employeeCountRange.getMin(), employeeCountRange.getMax()))
+            .orderBy(employee_count, DEPARTMENT.ID)
+            .limit(pageable.getPageSize()).offset((int) pageable.getOffset())
+            .fetch();
+    }
+
     public List<DepartmentTableRow> fetchDepartmentTableData_Untemplated(DepartmentSearch search, Pageable pageable) {
         Range<Integer> employeeCountRange = search.getEmployeeCount();
 
         return dslContext.select(fields(
-            prefixed(DEPARTMENT, COMPANY),
+            prefixedWithoutIds(DEPARTMENT, COMPANY),
             DEPARTMENT_ID_as_id,
             head.NAME.as("department_head_name"),
             count(emp.ID).as(employee_count))
@@ -77,7 +105,7 @@ public class DepartmentSearchDao {
 
         return dslContext
             .select(fields(
-                prefixed(DEPARTMENT, COMPANY),
+                prefixedWithoutIds(DEPARTMENT, COMPANY),
                 DEPARTMENT_ID_as_id,
                 head.NAME.as("department_head_name"),
                 count(emp.ID).as(employee_count))
@@ -102,6 +130,8 @@ public class DepartmentSearchDao {
             .limit(pageable.getPageSize()).offset((int) pageable.getOffset())
             .fetchInto(DepartmentTableRow.class);
     }
+
+    // final version:
 
     private static final OrderByBuilder orderByBuilder = new OrderByBuilder()
         .allowSortByFieldsOf(DepartmentTableRow.class)
@@ -153,7 +183,5 @@ public class DepartmentSearchDao {
             .groupBy(DEPARTMENT.ID, COMPANY.ID, head.ID)
             .having(conditionBetween(count(emp.ID), search.getEmployeeCount()).build());
     }
-
-
 
 }

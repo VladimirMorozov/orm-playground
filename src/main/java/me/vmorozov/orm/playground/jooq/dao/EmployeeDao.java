@@ -45,30 +45,14 @@ public class EmployeeDao {
     }
 
     public List<Employee> findEmployees(int companyId) {
-        return dslContext.select(E.asterisk())
+        return dslContext.select(COMPANY.asterisk())
             .from(EMPLOYEE)
             .join(DEPARTMENT).on(E.DEPARTMENT_ID.equal(D.ID))
             .where(DEPARTMENT.COMPANY_ID.equal(companyId))
             .fetchInto(Employee.class);
     }
 
-    public List<DepartmentInfo> getDepartmentInfo0(int departmentId) {
-        return dslContext.select(EMPLOYEE.asterisk(), DEPARTMENT.asterisk(), COMPANY.asterisk())
-            .from(DEPARTMENT)
-            .join(COMPANY).on(DEPARTMENT.COMPANY_ID.equal(COMPANY.ID))
-            .join(EMPLOYEE).on(DEPARTMENT.ID.eq(EMPLOYEE.DEPARTMENT_ID))
-            .where(DEPARTMENT.ID.equal(departmentId))
-            .fetchInto(DepartmentInfo.class);
-    }
-
     public Optional<DepartmentInfo> getDepartmentInfo(int departmentId) {
-        dslContext.select(fields(prefixed(EMPLOYEE, COMPANY), DEPARTMENT.asterisk()))
-            .from(DEPARTMENT)
-            .join(COMPANY).on(DEPARTMENT.COMPANY_ID.equal(COMPANY.ID))
-            .join(EMPLOYEE).on(DEPARTMENT.ID.eq(EMPLOYEE.DEPARTMENT_ID))
-            .where(DEPARTMENT.ID.equal(departmentId))
-            .fetch();
-
         ResultSet resultSet = dslContext.select(fields(prefixed(EMPLOYEE, COMPANY), DEPARTMENT.asterisk()))
             .from(DEPARTMENT)
             .join(COMPANY).on(DEPARTMENT.COMPANY_ID.equal(COMPANY.ID))

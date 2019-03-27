@@ -18,6 +18,13 @@ public class DepartmentSearchDaoTest extends IntegrationTest {
     DepartmentSearchDao departmentSearchDao;
 
     @Test
+    public void run() {
+        DepartmentSearch search = new DepartmentSearch();
+        search.setEmployeeCount(new Range<>(0, 100));
+        departmentSearchDao.fetchDepartmentTableData_Untemplated(search, PageRequest.of(0, 10, Sort.by("department_head_id")));
+    }
+
+    @Test
     public void shouldFetchTable() {
         DepartmentSearch departmentSearch = new DepartmentSearch()
             .setDepartmentHeadName("Vladimir")
