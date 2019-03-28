@@ -4,10 +4,9 @@
 package me.vmorozov.orm.playground.domain;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.time.OffsetDateTime;
 
-public class Employee implements Serializable {
+public class Employee {
 
     private Integer id;
     private Integer departmentId;
