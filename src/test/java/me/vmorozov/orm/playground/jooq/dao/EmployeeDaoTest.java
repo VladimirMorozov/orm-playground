@@ -16,8 +16,6 @@ public class EmployeeDaoTest extends IntegrationTest {
     @Test
     public void shouldFetch() {
         List<Employee> employees = employeeDao.findEmployees(1);
-
-        System.out.println(employeeDao.getDepartmentInfo(1));
     }
 
 }

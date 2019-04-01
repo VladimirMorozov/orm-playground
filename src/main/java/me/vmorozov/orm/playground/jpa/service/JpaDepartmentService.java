@@ -29,7 +29,7 @@ public class JpaDepartmentService {
     }
 
     public void changeDepartment(Employee employee) {
-        Department newDepartment = departmentRepository.findById(1).orElseThrow();
+        Department newDepartment = departmentRepository.getOne(1);
         employee.setDepartment(newDepartment);
     }
 
