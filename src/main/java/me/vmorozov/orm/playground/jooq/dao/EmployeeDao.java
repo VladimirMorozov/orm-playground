@@ -25,7 +25,7 @@ public class EmployeeDao {
     }
 
     public List<Employee> findEmployees(int companyId) {
-        return dslContext.select(COMPANY.asterisk())
+        return dslContext.select(EMPLOYEE.asterisk())// change to COMPANY for runtime error
             .from(EMPLOYEE)
             .join(DEPARTMENT).on(E.DEPARTMENT_ID.equal(D.ID))
             .where(DEPARTMENT.COMPANY_ID.equal(companyId))

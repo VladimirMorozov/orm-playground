@@ -52,7 +52,7 @@
     </select>
 
     <select id="getDepartmentTableCount" resultType="long">
-        SELECT COUNT(*) FROM (SELECT d.id <include refid="getDepartmentTableCommon"/> AS sub
+        SELECT COUNT(*) FROM (SELECT d.id <include refid="getDepartmentTableCommon"/>) AS sub
     </select>
 
     <sql id="getDepartmentTableCommon">

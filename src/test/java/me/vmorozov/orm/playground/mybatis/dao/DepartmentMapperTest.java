@@ -3,7 +3,7 @@ package me.vmorozov.orm.playground.mybatis.dao;
 import me.vmorozov.orm.playground.IntegrationTest;
 import me.vmorozov.orm.playground.domain.search.DepartmentSearch;
 import me.vmorozov.orm.playground.domain.search.Range;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

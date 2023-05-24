@@ -5,12 +5,12 @@ plugins {
 group 'me.vmorozov'
 version '0.0.1-SNAPSHOT'
 
-sourceCompatibility = 11
+sourceCompatibility = 17
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile("org.jooq:jooq-codegen:${jooqVersion}")
+    implementation("org.jooq:jooq-codegen:${jooqVersion}")
 }

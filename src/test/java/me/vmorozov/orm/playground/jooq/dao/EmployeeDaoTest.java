@@ -2,7 +2,7 @@ package me.vmorozov.orm.playground.jooq.dao;
 
 import me.vmorozov.orm.playground.IntegrationTest;
 import me.vmorozov.orm.playground.jooq.generated.tables.pojos.Employee;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

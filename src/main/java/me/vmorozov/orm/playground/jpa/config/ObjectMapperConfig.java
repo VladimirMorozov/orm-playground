@@ -1,6 +1,6 @@
 package me.vmorozov.orm.playground.jpa.config;
 
-import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import com.fasterxml.jackson.datatype.hibernate6.Hibernate6Module;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 public class ObjectMapperConfig {
 
     @Bean
-    public Hibernate5Module hibernateModule() {
-        return new Hibernate5Module();
+    public Hibernate6Module hibernateModule() {
+        return new Hibernate6Module();
     }
 
 }

@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface DepartmentRepository extends /* ... */ JpaRepository<Department, Integer>, DepartmentSearchRepository {
 
-    @Query("select d, e, c " +
+    @Query("select d " +
         "from Department as d " +
         "join fetch d.employees as e " +
         "join fetch d.company as c " +

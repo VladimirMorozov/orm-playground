@@ -4,7 +4,7 @@ import me.vmorozov.orm.playground.IntegrationTest;
 import me.vmorozov.orm.playground.domain.search.DepartmentSearch;
 import me.vmorozov.orm.playground.domain.search.DepartmentTableRow;
 import me.vmorozov.orm.playground.domain.search.Range;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -35,9 +35,9 @@ public class DepartmentSearchDaoTest extends IntegrationTest {
         DepartmentSearch emptyDepartmentSearch = new DepartmentSearch();
 
         List<DepartmentTableRow> departmentTableRows = departmentSearchDao.fetchDepartmentTableData(
-            departmentSearch, PageRequest.of(0, 10, new Sort(Direction.ASC, "departmentHeadName")));
+            departmentSearch, PageRequest.of(0, 10, Sort.by(Direction.ASC, "departmentHeadName")));
         List<DepartmentTableRow> departmentTableRows2 = departmentSearchDao.fetchDepartmentTableData(departmentSearch, PageRequest.of(1, 2));
-        departmentSearchDao.fetchDepartmentTableData(emptyDepartmentSearch, PageRequest.of(0, 100, new Sort(Direction.ASC, "departmentHeadName")));
+        departmentSearchDao.fetchDepartmentTableData(emptyDepartmentSearch, PageRequest.of(0, 100, Sort.by(Direction.ASC, "departmentHeadName")));
 
         int count = departmentSearchDao.fetchDepartmentTableCount(departmentSearch);
         int count2 = departmentSearchDao.fetchDepartmentTableCount(emptyDepartmentSearch);

@@ -2,9 +2,9 @@ package me.vmorozov.orm.playground.jpa.util;
 
 import org.springframework.data.domain.Sort;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Order;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Order;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

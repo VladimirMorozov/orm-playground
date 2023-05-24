@@ -4,7 +4,7 @@
 package me.vmorozov.orm.playground.domain;
 
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 public class Department {
 
