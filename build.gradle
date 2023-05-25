@@ -15,9 +15,7 @@ repositories {
 
 sourceSets {
     jooq {
-
-        java {
-        }
+        java { }
     }
     main {
         compileClasspath += sourceSets.jooq.output
