@@ -1,5 +1,8 @@
 package me.vmorozov.orm.playground.domain.search;
 
+/**
+ * "Table" means UI table here
+ */
 public class DepartmentTableRow {
 
     private int id;

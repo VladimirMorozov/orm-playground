@@ -14,7 +14,8 @@ public class JooqConfig {
      */
     @Bean
     public SfmRecordMapperProvider sfmRecordMapperProvider() {
-        return SfmRecordMapperProviderFactory.newInstance().newProvider();
+        SfmRecordMapperProviderFactory sfmRecordMapperProviderFactory = SfmRecordMapperProviderFactory.newInstance();
+        return sfmRecordMapperProviderFactory.newProvider();
     }
 
 }

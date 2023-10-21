@@ -14,4 +14,9 @@ public class JpaDepartmentServiceTest extends IntegrationTest {
         jpaDepartmentService.demonstrateMagic();
     }
 
+    @Test
+    public void shouldDoModification() {
+        jpaDepartmentService.doDifferentChanges();
+    }
+
 }

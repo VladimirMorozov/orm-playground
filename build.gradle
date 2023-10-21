@@ -1,16 +1,26 @@
 plugins {
-    id 'nu.studer.jooq' version '8.2'
-    id 'org.springframework.boot' version '3.1.0'
+    id 'nu.studer.jooq' version '8.2.1'
+    id 'org.springframework.boot' version '3.1.4'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'java'
 }
 
 group = 'me.vmorozov'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
 
 repositories {
     mavenCentral()
+}
+
+test {
+    useJUnitPlatform {
+    }
 }
 
 sourceSets {
@@ -26,6 +36,7 @@ sourceSets {
         runtimeClasspath += sourceSets.jooq.output
     }
 }
+
 
 configurations {
     jooqImplementation.extendsFrom(implementation)
@@ -89,7 +100,7 @@ dependencies {
     implementation("org.mybatis:mybatis-typehandlers-jsr310:1.0.2")
 
     implementation 'org.springframework.boot:spring-boot-starter-jooq'
-    implementation group: 'org.simpleflatmapper', name: 'sfm-jooq', version: '6.4.2'
+    implementation group: 'org.simpleflatmapper', name: 'sfm-jooq', version: '8.2.3'
     jooqGenerator 'org.postgresql:postgresql'
     jooqGenerator project(':orm.playground.jooq.generator')
 
@@ -99,6 +110,12 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation('org.assertj:assertj-core:3.11.0')
 
+    implementation 'org.simpleflatmapper:sfm-springjdbc:8.2.3'
+
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    testCompileOnly 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
     //implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
     
     

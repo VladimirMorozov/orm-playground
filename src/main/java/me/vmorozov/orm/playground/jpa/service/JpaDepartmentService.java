@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Random;
+
 @Service
 @Transactional
 public class JpaDepartmentService {
@@ -31,6 +33,19 @@ public class JpaDepartmentService {
     public void changeDepartment(Employee employee) {
         Department newDepartment = departmentRepository.getOne(1);
         employee.setDepartment(newDepartment);
+    }
+
+    public void doDifferentChanges() {
+        Department department = departmentRepository.getReferenceById(3);
+        Company company = department.getCompany();
+
+        // these changes will apply automatically
+        department.setName("Empty*"  + new Random().nextInt(100));
+        company.setName("Socks Ltd.*" + new Random().nextInt(100));
+
+        department.getEmployees().remove(0);
+        department.getEmployees().add(new Employee().setName("Freddy").setPosition("High Priest").setDepartment(department));
+
     }
 
 }
