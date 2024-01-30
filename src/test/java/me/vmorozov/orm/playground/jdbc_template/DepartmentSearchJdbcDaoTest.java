@@ -31,12 +31,12 @@ class DepartmentSearchJdbcDaoTest extends IntegrationTest {
         List<DepartmentTableRow> departmentTableRows2 = departmentSearchJdbcDao.fetchDepartmentTableData(departmentSearch, PageRequest.of(1, 2));
         departmentSearchJdbcDao.fetchDepartmentTableData(emptyDepartmentSearch, PageRequest.of(0, 100, Sort.by(Sort.Direction.ASC, "departmentHeadName")));
 
-//        int count = departmentSearchDao.fetchDepartmentTableCount(departmentSearch);
-//        int count2 = departmentSearchDao.fetchDepartmentTableCount(emptyDepartmentSearch);
-//
-//        System.out.println(departmentTableRows);
-//        System.out.println(count);
-//        System.out.println(count2);
+        long count = departmentSearchJdbcDao.fetchDepartmentTableCount(departmentSearch);
+        long count2 = departmentSearchJdbcDao.fetchDepartmentTableCount(emptyDepartmentSearch);
+
+        System.out.println(departmentTableRows);
+        System.out.println(count);
+        System.out.println(count2);
     }
 
 }
